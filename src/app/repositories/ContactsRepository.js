@@ -20,21 +20,20 @@ let contacts = [
 ]
 
 class ContactsRepository {
-  async findAll() {
-    const rows = await db.query('SELECT * from contacts')
+  async findAll(orderBy = 'ASC') {
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC'
+    const rows = await db.query(`SELECT * from contacts ORDER BY name ${direction}`)
     return rows
   }
 
-  findById(id) {
-    return new Promise((resolve) => resolve(
-      contacts.find((contact) => contact.id === id)
-    ))
+  async findById(id) {
+    const [row] = await db.query('SELECT * from contacts WHERE id = $1', [id])
+    return row
   }
 
-  findByEmail(email) {
-    return new Promise((resolve) => resolve(
-      contacts.find((contact) => contact.email === email)
-    ))
+  async findByEmail(email) {
+    const [row] = await db.query('SELECT * from contacts WHERE email = $1', [email])
+    return row
   }
 
   async create({ name, email, phone, category_id }) {
