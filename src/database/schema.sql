@@ -1,4 +1,4 @@
-CREATE DATABASE mycontacts;
+-- CREATE DATABASE fornecedores_app;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 

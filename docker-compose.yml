@@ -1,0 +1,13 @@
+services:
+  pg:
+    container_name: fornecedores_app
+    image: postgres:16
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: fornecedores_app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    restart: always
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
