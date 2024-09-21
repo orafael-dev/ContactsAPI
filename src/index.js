@@ -1,13 +1,24 @@
-const express = require("express")
-require('express-async-errors')
-const routes = require('./routes')
-const cors = require("./app/controllers/middlewares/cors")
-const errorHandler = require("./app/controllers/middlewares/errorHandler")
+require("dotenv").config();
+require("express-async-errors");
 
-const app = express()
+const database = require("./database");
+const express = require("express");
+const routes = require("./routes");
+const cors = require("./app/controllers/middlewares/cors");
+const errorHandler = require("./app/controllers/middlewares/errorHandler");
 
-app.use(express.json())
-app.use(cors)
-app.use(routes)
-app.use(errorHandler)
-app.listen(3001, () => console.log('🔥 - Server starded at http://localhost:3001'))
+async function main() {
+  await database.execute();
+  const app = express();
+
+  app.use(express.json());
+  app.use(cors);
+  app.use(routes);
+  app.use(errorHandler);
+  const port = Number(process.env.PORT);
+  app.listen(port, () =>
+    console.log(`🔥 - Server starded at http://localhost:${port}`)
+  );
+}
+
+main();
