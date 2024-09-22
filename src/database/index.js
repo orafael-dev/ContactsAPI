@@ -8,6 +8,7 @@ const client = new Client({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  ssl: process.env.DB_SSL === "require",
 });
 
 async function execute() {
