@@ -11,19 +11,8 @@ async function main() {
   await database.execute();
   const app = express();
 
-  const whiteList = [process.env.FRONTEND_URL];
-  const corsOptions = {
-    origin: function (origin, callback) {
-      if ((origin && whiteList.includes(origin)) ?? !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  };
-
   app.use(express.json());
-  app.use(cors(corsOptions));
+  app.use(cors);
   app.use(routes);
   app.use(errorHandler);
   const port = Number(process.env.PORT);
